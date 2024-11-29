@@ -1,20 +1,25 @@
-mod spec_validator_result;
+/// Specification helper module
+pub mod spec_validation_result;
 
-use spec_validator_result::SpecValidatorResult;
+use spec_validation_result::SpecValidationResult;
 use crate::core::validator::Validator;
 use crate::core::validator::validator_result::ValidatorResult;
 
+/// Encapsulates a collections of validation rules to apply to
+/// an input of type `T`
 pub struct Spec<T>(Vec<Validator<T>>);
 
 impl <T> Spec<T> {
+    /// Simple specification constructor
     pub fn new() -> Spec<T> {
         Spec(vec![])
     }
 
-    pub fn validate<U: Into<T>>(&self, input: U) -> SpecValidatorResult<T> {
+    /// Runs the specification againts an input and returns findings as a `SpecValidationResult`
+    pub fn validate<U: Into<T>>(&self, input: U) -> SpecValidationResult<T> {
         let input = input.into();
         self.0.iter().fold(
-            SpecValidatorResult::valid(input),
+            SpecValidationResult::valid(input),
             | result, validator | {
                 let validation_result = validator(result.value());
                 match (result, validation_result) {
@@ -25,6 +30,7 @@ impl <T> Spec<T> {
         )
     }
 
+    /// Adds an additional validator to a specification
     pub fn be(mut self, validator: Validator<T>) -> Spec<T>
     {
         self.0.push(validator);
@@ -37,7 +43,7 @@ impl <T> Spec<T> {
 mod tests {
     use crate::{assert_spec_valid, assert_spec_validation_error};
     use crate::core::require::Require;
-    use crate::core::spec::spec_validator_result::SpecValidatorResult;
+    use crate::core::spec::spec_validation_result::SpecValidationResult;
     use crate::specs::string::not_empty;
 
     #[test]

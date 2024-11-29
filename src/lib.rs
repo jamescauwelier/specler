@@ -1,12 +1,33 @@
 #![warn(missing_docs)]
 
-//! Specler
+//! # Specler
 //!
 //! A simple library for defining and validating specifications on your types.
 //! This solves an issue with other validation approaches where
 //! it is possible to first create a type and then verify its validity.
 //! In disagreeing with this approach, a solution was needed to
 //! verify specifications in factory methods.
+//!
+//! ## Concepts
+//!
+//! A specification defines a list of requirements that a type must meet.
+//! These requirements are expressed as a list of validators, which are
+//! simple functions returning a `ValidatorResult`. These then get
+//! compiled into a single `SpecValidationResult`.
+//!
+//! ## Examples
+//!
+//! ### Validating using an empty spec
+//!
+//! ```
+//! use specler::assert_spec_valid;
+//! use crate::specler::core::require::Require;
+//! use crate::specler::core::spec::spec_validation_result::SpecValidationResult;
+//!
+//! let spec = Require::<String>::to();
+//! let result = spec.validate("");
+//! assert_spec_valid!(result);
+//! ```
 
 /// Core module containing core functionality, excluding concrete type specifications
 pub mod core;
