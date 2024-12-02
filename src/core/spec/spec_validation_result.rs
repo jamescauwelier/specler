@@ -2,7 +2,7 @@ use crate::core::spec_error::SpecError;
 
 /// Represents the result of a spec validation, which can either be valid or invalid.
 /// This enum is separate from a single validation error because it allows for multiple reasons.
-pub enum SpecValidationResult<T> {
+pub(crate) enum SpecValidationResult<T> {
     /// Signals that the spec validation was successful
     Valid(T),
     /// Signals that the spec validation failed with a list of reasons
@@ -45,4 +45,6 @@ impl <T> SpecValidationResult<T> {
             SpecValidationResult::Invalid(value, _) => value
         }
     }
+
+
 }

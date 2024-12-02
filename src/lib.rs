@@ -22,27 +22,27 @@
 //! ```
 //! use specler::assert_spec_valid;
 //! use crate::specler::core::require::Require;
-//! use crate::specler::core::spec::spec_validation_result::SpecValidationResult;
+//! use crate::specler::core::spec_error::SpecError;
 //!
 //! let spec = Require::<String>::to();
 //! let result = spec.validate("");
 //!
-//! assert_spec_valid!(result);
+//! assert!(result.is_ok());
 //! ```
 //!
 //! ### Validating a string to not be empty
 //!
 //! ```
-//! use specler::{assert_spec_invalid, assert_spec_validation_error};
+//! use specler::{assert_spec_error_msg, assert_spec_invalid};
 //! use specler::core::require::Require;
 //! use specler::specs::string::not_empty;
-//! use crate::specler::core::spec::spec_validation_result::SpecValidationResult;
+//! use crate::specler::core::spec_error::SpecError;
 //!
 //! let spec = Require::<String>::to().be(not_empty);
 //! let result = spec.validate("");
 //!
-//! assert_spec_invalid!(result);
-//! assert_spec_validation_error!(result, "String cannot be empty");
+//! assert!(result.is_err());
+//! assert_spec_error_msg!(result, "String cannot be empty");
 //! ```
 
 /// Core module containing core functionality, excluding concrete type specifications

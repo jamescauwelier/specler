@@ -15,7 +15,7 @@ macro_rules! assert_spec_valid {
 #[macro_export]
 macro_rules! assert_spec_invalid {
         ($result:expr) => {
-            match $result {
+            match &$result {
                 SpecValidationResult::Invalid(_, _) => (),
                 SpecValidationResult::Valid(_) => {
                     panic!("Expected an invalid result, but got valid")
@@ -25,13 +25,26 @@ macro_rules! assert_spec_invalid {
     }
 
 /// Asserts that a `SpecValidationResult` is invalid and contains the expected error
+// #[macro_export]
+// macro_rules! assert_spec_validation_error {
+//         ($result:expr, $expected_err:expr) => {
+//             match &$result {
+//                 SpecValidationResult::Valid(_) => panic!("Expected an Err, but got Ok"),
+//                 SpecValidationResult::Invalid(_, errors) => {
+//                     assert!(errors.contains(&$expected_err.to_string()))
+//                 }
+//             }
+//         };
+//     }
+
+/// Asserts that a `SpecValidationResult` is invalid and contains the expected error
 #[macro_export]
-macro_rules! assert_spec_validation_error {
+macro_rules! assert_spec_error_msg {
         ($result:expr, $expected_err:expr) => {
-            match $result {
-                SpecValidationResult::Valid(_) => panic!("Expected an Err, but got Ok"),
-                SpecValidationResult::Invalid(_, errors) => {
-                    assert!(errors.contains(&$expected_err.to_string()))
+            match &$result {
+                Ok(_) => panic!("Expected an Err, but got Ok"),
+                Err(se) => {
+                    assert!(se.errors().contains(&$expected_err.to_string()))
                 }
             }
         };

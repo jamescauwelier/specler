@@ -2,6 +2,7 @@
 pub mod spec_validation_result;
 
 use spec_validation_result::SpecValidationResult;
+use crate::core::spec_error::SpecError;
 use crate::core::validator::Validator;
 use crate::core::validator::validator_result::ValidatorResult;
 
@@ -16,7 +17,7 @@ impl <T> Spec<T> {
     }
 
     /// Runs the specification againts an input and returns findings as a `SpecValidationResult`
-    pub fn validate<U: Into<T>>(&self, input: U) -> SpecValidationResult<T> {
+    pub fn validate<U: Into<T>>(&self, input: U) -> Result<T, SpecError> {
         let input = input.into();
         self.0.iter().fold(
             SpecValidationResult::valid(input),
@@ -27,7 +28,7 @@ impl <T> Spec<T> {
                     (current, ValidatorResult::Invalid(reason)) => current.fail(reason)
                 }
             }
-        )
+        ).into()
     }
 
     /// Adds an additional validator to a specification
@@ -41,16 +42,15 @@ impl <T> Spec<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{assert_spec_valid, assert_spec_validation_error};
+    use crate::{assert_spec_error_msg};
     use crate::core::require::Require;
-    use crate::core::spec::spec_validation_result::SpecValidationResult;
     use crate::specs::string::not_empty;
 
     #[test]
     fn validate_string_with_empty_spec() {
         let spec = Require::<String>::to();
         let result = spec.validate("");
-        assert_spec_valid!(result);
+        assert_eq!(result.unwrap().as_str(), "");
     }
 
     #[test]
@@ -58,6 +58,6 @@ mod tests {
         let spec = Require::<String>::to()
             .be(not_empty);
         let result = spec.validate("");
-        assert_spec_validation_error!(result, "String cannot be empty");
+        assert_spec_error_msg!(result, "String cannot be empty");
     }
 }
