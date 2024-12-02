@@ -8,4 +8,9 @@ pub mod require;
 
 /// Asserts to help in verifying validation results
 pub mod asserts;
-mod spec_error;
+
+/// Module for defining errors that can occur during validation.
+/// This error is exposed and is the one to be used in consuming
+/// code. Other errors are strictly for internal use and should
+/// not be exposed.
+pub mod spec_error;
