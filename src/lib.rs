@@ -42,7 +42,7 @@
 //! let result = spec.validate("");
 //!
 //! assert!(result.is_err());
-//! assert_spec_error_msg!(result, "String cannot be empty");
+//! assert_spec_error_msg!(result, "cannot be empty");
 //! ```
 
 /// Core module containing core functionality, excluding concrete type specifications

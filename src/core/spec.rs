@@ -58,6 +58,6 @@ mod tests {
         let spec = Require::<String>::to()
             .be(not_empty);
         let result = spec.validate("");
-        assert_spec_error_msg!(result, "String cannot be empty");
+        assert_spec_error_msg!(result, "cannot be empty");
     }
 }
