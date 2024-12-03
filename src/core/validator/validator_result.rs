@@ -13,6 +13,13 @@ impl ValidatorResult {
         ValidatorResult::Valid
     }
 
+    pub fn is_valid(&self) -> bool {
+        match self {
+            ValidatorResult::Valid => true,
+            ValidatorResult::Invalid(_) => false
+        }
+    }
+
     #[cfg(test)]
     pub(crate) fn error_message(&self) -> &str {
         match self {
