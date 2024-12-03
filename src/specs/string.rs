@@ -2,9 +2,9 @@ use regex::Regex;
 use crate::core::validator::validator_result::ValidatorResult;
 
 /// Validates that a string is not empty
-pub fn not_empty() -> Box<dyn Fn(&String) -> ValidatorResult> {
+pub fn not_empty() -> Box<dyn Fn(&str) -> ValidatorResult> {
     Box::new(
-        move |input: &String| {
+        move |input: &str| {
             if input.is_empty() {
                 ValidatorResult::invalid("cannot be empty")
             } else {
@@ -15,9 +15,9 @@ pub fn not_empty() -> Box<dyn Fn(&String) -> ValidatorResult> {
 }
 
 /// Validates a string is shorter than a given length
-pub fn no_longer_than(length: usize) -> Box<dyn Fn(&String) -> ValidatorResult> {
+pub fn no_longer_than(length: usize) -> Box<dyn Fn(&str) -> ValidatorResult> {
     Box::new(
-        move |input: &String | {
+        move |input: &str | {
             if input.len() <= length {
                 ValidatorResult::valid()
             } else {
@@ -28,9 +28,9 @@ pub fn no_longer_than(length: usize) -> Box<dyn Fn(&String) -> ValidatorResult> 
 }
 
 /// Validates a string is longer than a given length
-pub fn no_shorter_than(length: usize) -> Box<dyn Fn(&String) -> ValidatorResult> {
+pub fn no_shorter_than(length: usize) -> Box<dyn Fn(&str) -> ValidatorResult> {
     Box::new(
-        move |input: &String| {
+        move |input: &str| {
             if input.len() >= length {
                 ValidatorResult::valid()
             } else {
@@ -41,9 +41,9 @@ pub fn no_shorter_than(length: usize) -> Box<dyn Fn(&String) -> ValidatorResult>
 }
 
 /// Validates a string matches a given regex pattern
-pub fn matching(pattern: &str) -> Box<dyn Fn(&String) -> ValidatorResult + '_> {
+pub fn matching(pattern: &str) -> Box<dyn Fn(&str) -> ValidatorResult + '_> {
     Box::new(
-        move |input: &String| {
+        move |input: &str| {
             match Regex::new(pattern) {
                 Ok(re) => {
                     if re.is_match(input) {

@@ -14,3 +14,4 @@ pub mod asserts;
 /// code. Other errors are strictly for internal use and should
 /// not be exposed.
 pub mod spec_error;
+pub mod validated;

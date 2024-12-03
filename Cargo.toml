@@ -12,5 +12,6 @@ keywords = ["validation", "specification", "rust"]
 authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
 
 [dependencies]
+concat-idents = "1.1.5"
 regex = "1.11.1"
 thiserror = "2.0.3"

@@ -1,5 +1,6 @@
 /// Specification helper module
 pub mod spec_validation_result;
+pub mod contains_spec;
 
 use spec_validation_result::SpecValidationResult;
 use crate::core::spec_error::SpecError;
@@ -10,7 +11,7 @@ use crate::core::validator::validator_result::ValidatorResult;
 /// an input of type `T`
 pub struct Spec<T>(Vec<Validator<T>>);
 
-impl <T> Spec<T> {
+impl <T: Clone> Spec<T> {
     /// Simple specification constructor
     pub fn new() -> Spec<T> {
         Spec(vec![])
