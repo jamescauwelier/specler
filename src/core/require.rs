@@ -9,6 +9,6 @@ pub struct Require<T> {
 impl <T> Require<T> {
     /// Starts the creation of a new validation spec
     pub fn to() -> Spec<T> {
-        Spec::new()
+        Spec::<T>::new()
     }
 }
