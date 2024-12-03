@@ -2,12 +2,16 @@ use regex::Regex;
 use crate::core::validator::validator_result::ValidatorResult;
 
 /// Validates that a string is not empty
-pub fn not_empty(input: &String) -> ValidatorResult {
-    if input.is_empty() {
-        ValidatorResult::invalid("cannot be empty")
-    } else {
-        ValidatorResult::valid()
-    }
+pub fn not_empty() -> Box<dyn Fn(&String) -> ValidatorResult> {
+    Box::new(
+        move |input: &String| {
+            if input.is_empty() {
+                ValidatorResult::invalid("cannot be empty")
+            } else {
+                ValidatorResult::valid()
+            }
+        }
+    )
 }
 
 /// Validates a string is shorter than a given length
@@ -63,13 +67,13 @@ mod tests {
 
         #[test]
         fn test_valid() {
-            let result = super::not_empty(&"James".to_string());
+            let result = super::not_empty()(&"James".to_string());
             assert_eq!(result, ValidatorResult::valid());
         }
 
         #[test]
         fn test_invalid() {
-            let result = super::not_empty(&"".to_string());
+            let result = super::not_empty()(&"".to_string());
             assert_eq!(result.error_message(), "cannot be empty");
         }
     }

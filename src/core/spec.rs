@@ -56,7 +56,7 @@ mod tests {
     #[test]
     fn validate_string_to_not_be_empty() {
         let spec = Require::<String>::to()
-            .be(Box::new(not_empty));
+            .be(not_empty());
         let result = spec.validate("");
         assert_spec_error_msg!(result, "cannot be empty");
     }

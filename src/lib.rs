@@ -38,7 +38,7 @@
 //! use specler::specs::string::not_empty;
 //! use crate::specler::core::spec_error::SpecError;
 //!
-//! let spec = Require::<String>::to().be(Box::new(not_empty));
+//! let spec = Require::<String>::to().be(not_empty());
 //! let result = spec.validate("");
 //!
 //! assert!(result.is_err());
