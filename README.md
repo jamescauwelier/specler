@@ -9,7 +9,7 @@ no instances of structs can be made that don't adhere to said specs.
 ### Specler Core
 
 Published as `specler` on crates.io. See the 
-[README](./specler_core/README.md) for more information.
+[README](specler/README.md) for more information.
 
 ### Specler Macros
 
