@@ -1,17 +1,3 @@
-[package]
-name = "specler"
-version = "0.5.0"
-edition = "2021"
-description = "A simple way to write specifications on values"
-license = "CC0-1.0"
-repository = "https://github.com/jamescauwelier/specler"
-documentation = "https://docs.rs/specler"
-homepage = "https://github.com/jamescauwelier/specler"
-readme = "README.md"
-keywords = ["validation", "specification", "rust"]
-authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
-
-[dependencies]
-concat-idents = "1.1.5"
-regex = "1.11.1"
-thiserror = "2.0.3"
+[workspace]
+resolver = "2"
+members = ["specler_core", "specler_macros"]

@@ -1,12 +1,14 @@
-#[allow(dead_code)]
+#![allow(dead_code)]
 pub(crate) mod common;
 
+use specler::core::create_with_specification::CreateWithSpecification;
 use specler::core::require::Require;
 use specler::core::spec::contains_spec::ContainsSpec;
 use specler::core::spec::Spec;
 use specler::core::spec_error::SpecError;
 use specler::core::validated::Validated;
-use specler::specs::integer::{larger_or_equal_than, larger_than, smaller_or_equal_than, smaller_than, Integer};
+use specler::specs::integer::{larger_or_equal_than, larger_than, smaller_or_equal_than, smaller_than};
+use specler_macros::create_with_spec;
 
 struct FirstNumberSpec;
 impl ContainsSpec<isize> for FirstNumberSpec {
@@ -18,17 +20,8 @@ impl ContainsSpec<isize> for FirstNumberSpec {
 }
 
 #[derive(Debug)]
+#[create_with_spec(FirstNumberSpec)]
 struct FirstNumber(isize);
-impl FirstNumber {
-    fn create(
-        pre_validated_input: impl Into<Validated<isize, FirstNumberSpec>>,
-    ) -> Result<FirstNumber, SpecError> {
-        match pre_validated_input.into() {
-            Validated::Valid { value, _spec } => Ok(FirstNumber(value)),
-            Validated::Invalid { error, _spec } => Err(error),
-        }
-    }
-}
 
 struct SecondNumberSpec;
 impl ContainsSpec<i64> for SecondNumberSpec {
@@ -40,25 +33,14 @@ impl ContainsSpec<i64> for SecondNumberSpec {
 }
 
 #[derive(Debug)]
+#[create_with_spec(SecondNumberSpec)]
 struct SecondNumber(i64);
-impl SecondNumber {
-    fn create(
-        pre_validated_input: impl Into<Validated<i64, SecondNumberSpec>>,
-    ) -> Result<SecondNumber, SpecError> {
-        match pre_validated_input.into() {
-            Validated::Valid { value, _spec } => Ok(SecondNumber(value)),
-            Validated::Invalid { error, _spec } => Err(error),
-        }
-    }
-}
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
     mod first_number {
         mod test_invalid_inputs {
-            use crate::{verify_invalid_input, FirstNumber};
+            use crate::*;
 
             verify_invalid_input!(empty_test, -1, FirstNumber::create);
             verify_invalid_input!(too_small_test, 0, FirstNumber::create);
@@ -66,7 +48,7 @@ mod tests {
         }
 
         mod test_valid_inputs {
-            use crate::{verify_valid_input, FirstNumber};
+            use crate::*;
 
             verify_valid_input!(valid_test_1, 1, FirstNumber::create);
             verify_valid_input!(valid_test_2, 99, FirstNumber::create);
@@ -75,14 +57,14 @@ mod tests {
 
     mod second_number {
         mod test_invalid_inputs {
-            use crate::{verify_invalid_input, SecondNumber};
+            use crate::*;
 
             verify_invalid_input!(empty_test, -1, SecondNumber::create);
             verify_invalid_input!(too_large_test, 101, SecondNumber::create);
         }
 
         mod test_valid_inputs {
-            use crate::{verify_valid_input, SecondNumber};
+            use crate::*;
 
             verify_valid_input!(valid_test_1, 0, SecondNumber::create);
             verify_valid_input!(valid_test_2, 100, SecondNumber::create);

@@ -1,0 +1,21 @@
+[package]
+name = "specler_macros"
+version = "0.5.0"
+edition = "2021"
+description = "Specler macros make it easier to attach specifications to structs"
+license = "CC0-1.0"
+repository = "https://github.com/jamescauwelier/specler"
+documentation = "https://docs.rs/specler_macros"
+homepage = "https://github.com/jamescauwelier/specler"
+readme = "README.md"
+keywords = ["validation", "specification", "rust"]
+authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1.0.92"
+quote = "1.0.37"
+syn = "2.0.90"
+

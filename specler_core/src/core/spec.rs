@@ -1,5 +1,7 @@
 /// Specification helper module
 pub mod spec_validation_result;
+
+/// Module: defines the trait to provide specs in structs
 pub mod contains_spec;
 
 use spec_validation_result::SpecValidationResult;

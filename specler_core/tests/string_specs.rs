@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#![allow(dead_code)]
 pub(crate) mod common;
 
 use specler::core::require::Require;

@@ -14,4 +14,9 @@ pub mod asserts;
 /// code. Other errors are strictly for internal use and should
 /// not be exposed.
 pub mod spec_error;
+
+/// Module to mark types as validated
 pub mod validated;
+
+/// Module to provide traits to define spec dependent factories
+pub mod create_with_specification;

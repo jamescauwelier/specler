@@ -1,5 +1,6 @@
-#[macro_export]
-macro_rules! verify_invalid_input {
+pub(crate) mod test {
+    #[macro_export]
+    macro_rules! verify_invalid_input {
         ($name: ident, $input:expr, $factory:expr) => {
             #[test]
             fn $name() {
@@ -11,8 +12,8 @@ macro_rules! verify_invalid_input {
         };
     }
 
-#[macro_export]
-macro_rules! verify_valid_input {
+    #[macro_export]
+    macro_rules! verify_valid_input {
         ($name: ident, $input:expr, $factory:expr) => {
             #[test]
             fn $name() {
@@ -23,3 +24,5 @@ macro_rules! verify_valid_input {
             }
         };
     }
+}
+

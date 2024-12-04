@@ -78,3 +78,6 @@ pub mod core;
 
 /// Module containing core specifications for standard types, e.g. String
 pub mod specs;
+
+/// A prelude module re-exports commonly used items and is re-exported in the library's root
+pub mod prelude;
