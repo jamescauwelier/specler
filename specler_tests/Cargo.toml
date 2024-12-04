@@ -1,0 +1,8 @@
+[package]
+name = "specler_tests"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+specler = { path = "../specler_core" }
+specler_macros = { path = "../specler_macros" }
