@@ -1,6 +1,6 @@
 [package]
 name = "specler_macros"
-version = "0.6.0"
+version = "0.7.0"
 edition = "2021"
 description = "Specler macros make it easier to attach specifications to structs"
 license = "CC0-1.0"
@@ -15,7 +15,7 @@ authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
 proc-macro = true
 
 [dependencies]
-specler = "0.6.0"
+specler = "0.7.0"
 proc-macro2 = "1.0.92"
 quote = "1.0.37"
 syn = { version = "2.0.90", features = ["full"] }
