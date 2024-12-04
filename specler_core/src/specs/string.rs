@@ -2,9 +2,9 @@ use regex::Regex;
 use crate::core::validator::validator_result::ValidatorResult;
 
 /// Validates that a string is not empty
-pub fn not_empty() -> Box<dyn Fn(&str) -> ValidatorResult> {
+pub fn not_empty() -> Box<dyn Fn(String) -> ValidatorResult> {
     Box::new(
-        move |input: &str| {
+        move |input: String| {
             if input.is_empty() {
                 ValidatorResult::invalid("cannot be empty")
             } else {
@@ -15,9 +15,9 @@ pub fn not_empty() -> Box<dyn Fn(&str) -> ValidatorResult> {
 }
 
 /// Validates a string is shorter than a given length
-pub fn no_longer_than(length: usize) -> Box<dyn Fn(&str) -> ValidatorResult> {
+pub fn no_longer_than(length: usize) -> Box<dyn Fn(String) -> ValidatorResult> {
     Box::new(
-        move |input: &str | {
+        move |input: String | {
             if input.len() <= length {
                 ValidatorResult::valid()
             } else {
@@ -28,9 +28,9 @@ pub fn no_longer_than(length: usize) -> Box<dyn Fn(&str) -> ValidatorResult> {
 }
 
 /// Validates a string is longer than a given length
-pub fn no_shorter_than(length: usize) -> Box<dyn Fn(&str) -> ValidatorResult> {
+pub fn no_shorter_than(length: usize) -> Box<dyn Fn(String) -> ValidatorResult> {
     Box::new(
-        move |input: &str| {
+        move |input: String| {
             if input.len() >= length {
                 ValidatorResult::valid()
             } else {
@@ -41,12 +41,12 @@ pub fn no_shorter_than(length: usize) -> Box<dyn Fn(&str) -> ValidatorResult> {
 }
 
 /// Validates a string matches a given regex pattern
-pub fn matching(pattern: &str) -> Box<dyn Fn(&str) -> ValidatorResult + '_> {
+pub fn matching(pattern: &str) -> Box<dyn Fn(String) -> ValidatorResult + '_> {
     Box::new(
-        move |input: &str| {
+        move |input: String| {
             match Regex::new(pattern) {
                 Ok(re) => {
-                    if re.is_match(input) {
+                    if re.is_match(&input) {
                         ValidatorResult::valid()
                     } else {
                         ValidatorResult::invalid(format!("does not match the pattern '{}'", pattern).as_str())
@@ -67,13 +67,13 @@ mod tests {
 
         #[test]
         fn test_valid() {
-            let result = super::not_empty()(&"James".to_string());
+            let result = super::not_empty()("James".to_string());
             assert_eq!(result, ValidatorResult::valid());
         }
 
         #[test]
         fn test_invalid() {
-            let result = super::not_empty()(&"".to_string());
+            let result = super::not_empty()("".to_string());
             assert_eq!(result.error_message(), "cannot be empty");
         }
     }
@@ -81,14 +81,14 @@ mod tests {
     mod not_be_longer_than {
         #[test]
         fn test_valid() {
-            let input = &"James".to_string();
+            let input = "James".to_string();
             let result = super::no_longer_than(6)(input);
             assert!(result.is_valid());
         }
 
         #[test]
         fn test_invalid() {
-            let input = &"James".to_string();
+            let input = "James".to_string();
             let result = super::no_longer_than(4)(input);
             assert!(!result.is_valid());
             assert_eq!(result.error_message(), "cannot be longer than 4 characters");
@@ -98,14 +98,14 @@ mod tests {
     mod not_be_shorter_than {
         #[test]
         fn test_valid() {
-            let input = &"James".to_string();
+            let input = "James".to_string();
             let result = super::no_shorter_than(4)(input);
             assert!(result.is_valid());
         }
 
         #[test]
         fn test_invalid() {
-            let input = &"James".to_string();
+            let input = "James".to_string();
             let result = super::no_shorter_than(6)(input);
             assert!(!result.is_valid());
             assert_eq!(result.error_message(), "cannot be shorter than 6 characters");
@@ -119,14 +119,15 @@ mod tests {
         #[test]
         fn test_valid() {
             let valid_input: String = String::from("abba");
-            let result = super::matching(PATTERN)(&valid_input);
+            let result = super::matching(PATTERN)(valid_input);
             assert!(result.is_valid());
         }
 
         #[test]
         fn test_invalid() {
+            let pattern = r"^[a-zA-Z]+$";
             let invalid_input: String = String::from("oops123");
-            let result = super::matching(r"^[a-zA-Z]+$")(&invalid_input);
+            let result = super::matching(pattern)(invalid_input);
             assert!(!result.is_valid());
             assert_eq!(result.error_message(), "does not match the pattern '^[a-zA-Z]+$'");
         }

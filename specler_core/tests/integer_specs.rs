@@ -7,7 +7,9 @@ use specler::core::spec::contains_spec::ContainsSpec;
 use specler::core::spec::Spec;
 use specler::core::spec_error::SpecError;
 use specler::core::validated::Validated;
-use specler::specs::integer::{larger_or_equal_than, larger_than, smaller_or_equal_than, smaller_than};
+use specler::specs::integer::{
+    larger_or_equal_than, larger_than, smaller_or_equal_than, smaller_than,
+};
 use specler_macros::create_with_spec;
 
 struct FirstNumberSpec;
@@ -42,16 +44,16 @@ mod tests {
         mod test_invalid_inputs {
             use crate::*;
 
-            verify_invalid_input!(empty_test, -1, FirstNumber::create);
-            verify_invalid_input!(too_small_test, 0, FirstNumber::create);
-            verify_invalid_input!(too_large_test, 100, FirstNumber::create);
+            verify_invalid_input!(empty_test, -1_isize, FirstNumber::create);
+            verify_invalid_input!(too_small_test, 0_isize, FirstNumber::create);
+            verify_invalid_input!(too_large_test, 100_isize, FirstNumber::create);
         }
 
         mod test_valid_inputs {
             use crate::*;
 
-            verify_valid_input!(valid_test_1, 1, FirstNumber::create);
-            verify_valid_input!(valid_test_2, 99, FirstNumber::create);
+            verify_valid_input!(valid_test_1, 1_isize, FirstNumber::create);
+            verify_valid_input!(valid_test_2, 99_isize, FirstNumber::create);
         }
     }
 
@@ -70,5 +72,4 @@ mod tests {
             verify_valid_input!(valid_test_2, 100, SecondNumber::create);
         }
     }
-
 }

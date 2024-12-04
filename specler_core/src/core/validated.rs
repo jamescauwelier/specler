@@ -27,13 +27,13 @@ where
     }
 }
 
-impl <T,S> From<T> for Validated<T,S>
+impl <T, U> From<T> for Validated<T, U>
 where
     T: Clone,
-    S: ContainsSpec<T>
+    U: ContainsSpec<T>
 {
-    fn from(value: T) -> Validated<T,S> {
-        let spec = S::spec();
+    fn from(value: T) -> Validated<T, U> {
+        let spec = U::spec();
         match spec.validate(value) {
             Ok(v) => Validated::Valid {
                 value: v,

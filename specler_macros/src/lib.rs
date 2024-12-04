@@ -26,8 +26,10 @@ pub fn create_with_spec(attr: TokenStream, input: TokenStream) -> proc_macro::To
 
         #[doc="Macro generated factory trait implementation"]
         impl CreateWithSpecification<#field_type, #struct_identifier, #specs> for #struct_identifier {
-            fn create(pre_validated_input: impl Into<Validated<#field_type, #specs >>) -> Result<#struct_identifier, SpecError> {
-                match pre_validated_input.into() {
+            fn create(pre_validated_input: impl Into<#field_type>) -> Result<#struct_identifier, SpecError> {
+                let input: #field_type = pre_validated_input.into();
+                let validated_input: Validated<#field_type, #specs> = input.into();
+                match validated_input{
                     Validated::Valid { value, _spec } => Ok(#struct_identifier(value)),
                     Validated::Invalid { error, _spec } => Err(error),
                 }

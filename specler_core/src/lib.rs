@@ -38,7 +38,7 @@
 //! use specler::specs::string::not_empty;
 //! use crate::specler::core::spec_error::SpecError;
 //!
-//! let spec = Require::<&str>::to().be(not_empty());
+//! let spec = Require::<String>::to().be(not_empty());
 //! let result = spec.validate("");
 //!
 //! assert!(result.is_err());
@@ -50,7 +50,7 @@
 //! ```
 //! use specler::core::require::Require;
 //! use specler::specs::string::{no_longer_than, no_shorter_than};
-//! let spec = Require::<&str>::to()
+//! let spec = Require::<String>::to()
 //!     .be(no_longer_than(4))
 //!     .be(no_shorter_than(2));
 //! let result = spec.validate("abc");;
@@ -65,7 +65,7 @@
 //! # use specler::core::require::Require;
 //! # use specler::specs::string::matching;
 //! #
-//! let spec = Require::<&str>::to()
+//! let spec = Require::<String>::to()
 //!    .be(matching(r"^[a-zA-Z]+$"));
 //! let result = spec.validate("oops123");
 //!
