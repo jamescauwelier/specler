@@ -1,12 +1,7 @@
 #![allow(dead_code)]
 pub(crate) mod common;
 
-use specler::core::require::Require;
-use specler::core::spec::contains_spec::ContainsSpec;
-use specler::core::spec::Spec;
-use specler::core::spec_error::SpecError;
-use specler::core::validated::Validated;
-use specler::core::create_with_specification::CreateWithSpecification;
+use specler::prelude::*;
 use specler::specs::string::{no_longer_than, no_shorter_than, not_empty};
 use specler_macros::create_with_spec;
 

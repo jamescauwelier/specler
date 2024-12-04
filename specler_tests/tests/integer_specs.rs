@@ -1,12 +1,7 @@
 #![allow(dead_code)]
 pub(crate) mod common;
 
-use specler::core::create_with_specification::CreateWithSpecification;
-use specler::core::require::Require;
-use specler::core::spec::contains_spec::ContainsSpec;
-use specler::core::spec::Spec;
-use specler::core::spec_error::SpecError;
-use specler::core::validated::Validated;
+use specler::prelude::*;
 use specler::specs::integer::{
     larger_or_equal_than, larger_than, smaller_or_equal_than, smaller_than,
 };
