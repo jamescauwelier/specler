@@ -12,5 +12,6 @@ keywords = ["validation", "specification", "rust"]
 authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
 
 [dependencies]
+email_address = "0.2.9"
 regex = "1.11.1"
 thiserror = "2.0.3"

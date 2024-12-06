@@ -20,7 +20,6 @@
 //! ### Validating using an empty spec
 //!
 //! ```
-//! use specler::assert_spec_valid;
 //! use crate::specler::core::require::Require;
 //! use crate::specler::core::spec_error::SpecError;
 //!
@@ -33,7 +32,7 @@
 //! ### Validating a string to not be empty
 //!
 //! ```
-//! use specler::{assert_spec_error_msg, assert_spec_invalid};
+//! use specler::{assert_spec_error_msg};
 //! use specler::core::require::Require;
 //! use specler::specs::string::not_empty;
 //! use crate::specler::core::spec_error::SpecError;
