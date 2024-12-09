@@ -31,7 +31,7 @@ pub fn create_with_spec(attr: TokenStream, input: TokenStream) -> proc_macro::To
                 let validated_input: Validated<#field_type, #specs> = input.into();
                 match validated_input{
                     Validated::Valid { value, _spec } => Ok(#struct_identifier(value)),
-                    Validated::Invalid { error, _spec } => Err(error),
+                    Validated::Invalid { error, _spec } => Err(error.named(stringify!(#struct_identifier))),
                 }
             }
         }
