@@ -2,7 +2,7 @@
 pub(crate) mod common;
 
 use specler::prelude::*;
-use specler::specs::string::{no_longer_than, no_shorter_than, not_empty};
+use specler::specs::string::{an_email, no_longer_than, no_shorter_than, not_empty};
 use specler_macros::create_with_spec;
 
 #[derive(Debug)]

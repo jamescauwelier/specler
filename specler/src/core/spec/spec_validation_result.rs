@@ -13,7 +13,7 @@ impl <T: Clone> From<SpecValidationResult<T>> for Result<T, SpecError> {
     fn from(result: SpecValidationResult<T>) -> Result<T, SpecError> {
         match result {
             SpecValidationResult::Valid(value) => Ok(value),
-            SpecValidationResult::Invalid(_, reasons) => Err(SpecError::new(reasons))
+            SpecValidationResult::Invalid(_, reasons) => Err(SpecError::unnamed(reasons))
         }
     }
 }
