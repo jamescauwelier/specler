@@ -1,8 +1,7 @@
 use email_address::EmailAddress;
 use regex::Regex;
+use crate::core::validator::validator_fn::ValidatorFn;
 use crate::core::validator::validator_result::ValidatorResult;
-
-type ValidatorFn<T> = Box<dyn Fn(T) -> ValidatorResult>;
 
 /// Validates that a string is not empty
 pub fn not_empty() -> ValidatorFn<String> {

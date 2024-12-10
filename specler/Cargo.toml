@@ -15,3 +15,4 @@ authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
 email_address = "0.2.9"
 regex = "1.11.1"
 thiserror = "2.0.3"
+uuid = { version = "1.11.0", features = ["v4", "v7"]}
