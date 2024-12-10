@@ -2,7 +2,7 @@ use crate::core::validator::validator_fn::ValidatorFn;
 use crate::core::validator::validator_result::ValidatorResult;
 use ::uuid::Uuid;
 
-fn is_uuid(version: usize) -> ValidatorFn<String> {
+fn a_uuid(version: usize) -> ValidatorFn<String> {
     Box::new(
         move |input: String| {
             match Uuid::parse_str(&input) {
@@ -21,14 +21,14 @@ fn is_uuid(version: usize) -> ValidatorFn<String> {
 
 /// Produces a validator for UUID v4 strings, which are random
 /// and not sortable.
-pub fn is_uuid_v4() -> ValidatorFn<String> {
-    is_uuid(4)
+pub fn a_uuid_v4() -> ValidatorFn<String> {
+    a_uuid(4)
 }
 
 /// Produces a validator for UUID v7 strings, which are random
 /// but time sortable. These are best for database identifiers.
-pub fn is_uuid_v7() -> ValidatorFn<String> {
-    is_uuid(7)
+pub fn a_uuid_v7() -> ValidatorFn<String> {
+    a_uuid(7)
 }
 
 #[cfg(test)]
@@ -38,45 +38,45 @@ mod uuid {
     const INVALID_UUID: &str = "abc";
 
     mod v4 {
-        use crate::specs::uuid::is_uuid_v4;
+        use crate::specs::uuid::a_uuid_v4;
 
         #[test]
         fn test_valid() {
-            let result = is_uuid_v4()(super::UUID_V4.into());
+            let result = a_uuid_v4()(super::UUID_V4.into());
             assert!(result.is_valid());
         }
 
         #[test]
         fn test_invalid_type_7() {
-            let result = is_uuid_v4()(super::UUID_V7.into());
+            let result = a_uuid_v4()(super::UUID_V7.into());
             assert!(!result.is_valid());
         }
 
         #[test]
         fn test_not_a_uuid() {
-            let result = is_uuid_v4()(super::INVALID_UUID.into());
+            let result = a_uuid_v4()(super::INVALID_UUID.into());
             assert!(!result.is_valid());
         }
     }
 
     mod v7 {
-        use crate::specs::uuid::is_uuid_v7;
+        use crate::specs::uuid::a_uuid_v7;
 
         #[test]
         fn test_valid() {
-            let result = is_uuid_v7()(super::UUID_V7.into());
+            let result = a_uuid_v7()(super::UUID_V7.into());
             assert!(result.is_valid());
         }
 
         #[test]
         fn test_invalid_type_4() {
-            let result = is_uuid_v7()(super::UUID_V4.into());
+            let result = a_uuid_v7()(super::UUID_V4.into());
             assert!(!result.is_valid());
         }
 
         #[test]
         fn test_not_a_uuid() {
-            let result = is_uuid_v7()(super::INVALID_UUID.into());
+            let result = a_uuid_v7()(super::INVALID_UUID.into());
             assert!(!result.is_valid());
         }
     }

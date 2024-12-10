@@ -4,5 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-specler = { path = "../specler" }
+specler = { path = "../specler", features = ["uuid"] }
 specler_macros = { path = "../specler_macros" }

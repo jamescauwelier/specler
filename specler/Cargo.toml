@@ -11,6 +11,9 @@ readme = "README.md"
 keywords = ["validation", "specification", "rust"]
 authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
 
+[features]
+uuid = []
+
 [dependencies]
 email_address = "0.2.9"
 regex = "1.11.1"
