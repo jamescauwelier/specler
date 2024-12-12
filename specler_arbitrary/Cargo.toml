@@ -12,5 +12,4 @@ keywords = ["validation", "specification", "rust"]
 authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
 
 [dependencies]
-specler = { path = "../specler", features = ["uuid_strings"] }
 proptest.workspace = true
