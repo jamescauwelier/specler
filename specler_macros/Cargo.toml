@@ -1,6 +1,6 @@
 [package]
 name = "specler_macros"
-version = "0.14.0"
+version = "0.15.0"
 edition = "2021"
 description = "Specler macros make it easier to attach specifications to structs"
 license = "CC0-1.0"
