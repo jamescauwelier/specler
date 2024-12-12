@@ -4,6 +4,11 @@ use specler::prelude::*;
 use specler::specs::string::{no_longer_than, no_shorter_than, not_empty};
 use specler_macros::value_object;
 
+#[cfg(test)]
+use proptest::prelude::*;
+#[cfg(test)]
+use specler_arbitrary::prelude::*;
+
 #[derive(Debug)]
 #[value_object(SomeStringTypeSpecs)]
 struct SomeStringType(String);
@@ -19,22 +24,56 @@ impl<'a> SpecProvider<String> for SomeStringTypeSpecs {
 }
 
 #[cfg(test)]
-mod tests {
-    mod test_invalid_inputs {
-        use specler::prelude::ValueObjectFactory;
-        use crate::*;
-        use crate::string_specs::SomeStringType;
-
-        verify_invalid_input!(empty_test, "", SomeStringType::create);
-        verify_invalid_input!(too_small_test, "a", SomeStringType::create);
-        verify_invalid_input!(too_large_test, "abab", SomeStringType::create);
+impl ArbitraryValidSpecValue<String> for SomeStringTypeSpecs {
+    fn any_valid_value() -> BoxedStrategy<String> {
+        ".{2, 3}"
+            .prop_filter(
+                "A regex generates strings with character length, while our code constrains on byte length, so an additional filter is needed",
+                |s| s.len() > 1 && s.len() < 4
+            )
+            .boxed()
     }
-    mod test_valid_inputs {
-        use specler::prelude::ValueObjectFactory;
-        use crate::*;
-        use crate::string_specs::SomeStringType;
+}
 
-        verify_valid_input!(example_1, "ab", SomeStringType::create);
-        verify_valid_input!(example_2, "abc", SomeStringType::create);
+#[cfg(test)]
+impl ArbitraryInvalidSpecValue<String> for SomeStringTypeSpecs {
+    fn any_invalid_value() -> BoxedStrategy<String> {
+        ".|.{4,}"
+            .prop_filter(
+                "A regex generates strings with character length, while our code constrains on byte length, so an additional filter is needed",
+                |s| s.len() >= 4
+            )
+            .boxed()
+    }
+}
+
+#[cfg(test)]
+impl_arbitrary!(SomeStringType, SomeStringTypeSpecs);
+
+#[cfg(test)]
+mod tests {
+    use crate::string_specs::{SomeStringType, SomeStringTypeSpecs};
+    use proptest::prelude::*;
+    use specler::prelude::*;
+    use specler_arbitrary::{ArbitraryInvalidSpecValue, ArbitraryValidSpecValue};
+
+    proptest! {
+        #[test]
+        fn can_be_created_using_valid_input(s in SomeStringTypeSpecs::any_valid_value()) {
+            let result = SomeStringType::create(s);
+            assert!(result.is_ok());
+        }
+
+        #[test]
+        fn cannot_be_created_using_invalid_input(s in SomeStringTypeSpecs::any_invalid_value()) {
+            let result = SomeStringType::create(s);
+            assert!(!result.is_ok());
+        }
+
+        #[test]
+        fn can_extract_value(input: SomeStringType) {
+            assert!(input.0.len() > 0);
+            assert!(input.0.len() < 4);
+        }
     }
 }
