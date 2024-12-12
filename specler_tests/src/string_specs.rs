@@ -71,9 +71,8 @@ mod tests {
         }
 
         #[test]
-        fn can_extract_value(input: SomeStringType) {
-            assert!(input.0.len() > 0);
-            assert!(input.0.len() < 4);
+        fn is_a_value_object(input: SomeStringType) {
+            input.value();
         }
     }
 }

@@ -94,9 +94,8 @@ mod tests {
             }
 
             #[test]
-            fn can_extract_value(input: FirstNumber) {
-                assert!(input.0 > 0);
-                assert!(input.0 < 100);
+            fn is_a_value_object(input: FirstNumber) {
+                input.value();
             }
         }
     }

@@ -2,6 +2,13 @@ use specler::prelude::*;
 use specler::specs::uuid::a_uuid_v7;
 use specler_macros::value_object;
 
+#[cfg(test)]
+use proptest::prelude::*;
+#[cfg(test)]
+use specler_arbitrary::prelude::*;
+#[cfg(test)]
+use uuid::Uuid;
+
 #[derive(Debug)]
 #[value_object(UuidSpecs)]
 struct Id (String);
@@ -16,12 +23,56 @@ impl SpecProvider<String> for UuidSpecs
 }
 
 #[cfg(test)]
+impl ArbitraryValidSpecValue<String> for UuidSpecs {
+    fn any_valid_value() -> BoxedStrategy<String> {
+        // note that we could generate a more distributed set of
+        // valid UUIDs by using randome timestamps for the
+        // context seed
+        Just(Uuid::now_v7().to_string()).boxed()
+    }
+}
+
+#[cfg(test)]
+impl ArbitraryInvalidSpecValue<String> for UuidSpecs {
+    fn any_invalid_value() -> BoxedStrategy<String> {
+        ".*"
+            .prop_filter("String should not be a valid UUIDv7",
+                         move |s| {
+                                match Uuid::parse_str(s) {
+                                    // we filter out uuids that are of version 7
+                                    Ok(uuid) => uuid.get_version_num() != 7,
+                                    // non-uuids are always invalid input
+                                    Err(_) => true
+                                }
+                         }
+            )
+            .boxed()
+    }
+}
+
+#[cfg(test)]
+impl_arbitrary!(Id, UuidSpecs);
+
+#[cfg(test)]
 mod tests {
-    use crate::{verify_invalid_input, verify_valid_input};
     use super::*;
 
-    verify_valid_input!(valid_uuid_v7, "0193b205-ab8e-7b34-a13e-e18b9941dc05", Id::create);
+    proptest!{
+        #[test]
+        fn can_be_created_using_valid_input(s in UuidSpecs::any_valid_value()) {
+            let id = Id::create(s);
+            assert!(id.is_ok());
+        }
 
-    verify_invalid_input!(invalid_because_empty, "", Id::create);
-    verify_invalid_input!(invalid_because_v4, "0df7a521-d96e-4732-90c3-19aec144415c", Id::create);
+        #[test]
+        fn cannot_be_created_using_invalid_input(s in UuidSpecs::any_invalid_value()) {
+            let id = Id::create(s);
+            assert!(!id.is_ok());
+        }
+
+        #[test]
+        fn is_a_value_object(input: Id) {
+            input.value();
+        }
+    }
 }
