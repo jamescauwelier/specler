@@ -10,7 +10,7 @@ use specler_macros::value_object;
 use specler_arbitrary::prelude::*;
 
 struct FirstNumberSpec;
-impl ContainsSpec<usize> for FirstNumberSpec {
+impl SpecProvider<usize> for FirstNumberSpec {
     fn spec() -> Spec<usize> {
         Require::<usize>::to()
             .be(larger_than(0))
@@ -43,7 +43,7 @@ struct FirstNumber(usize);
 impl_arbitrary!(FirstNumber, FirstNumberSpec);
 
 struct SecondNumberSpec;
-impl ContainsSpec<u64> for SecondNumberSpec {
+impl SpecProvider<u64> for SecondNumberSpec {
     fn spec() -> Spec<u64> {
         Require::<u64>::to()
             .be(larger_or_equal_than(0))

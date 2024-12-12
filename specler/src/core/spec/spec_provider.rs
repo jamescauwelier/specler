@@ -1,9 +1,9 @@
 use crate::core::spec::Spec;
 
-/// # ContainsSpec
+/// # SpecProvider
 ///
 /// Trait to provide a specification on a type `T`.
-pub trait ContainsSpec<T> {
+pub trait SpecProvider<T> {
     /// Provides the spec
     fn spec() -> Spec<T>;
 }

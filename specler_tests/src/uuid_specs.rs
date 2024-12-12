@@ -7,7 +7,7 @@ use specler_macros::value_object;
 struct Id (String);
 
 struct UuidSpecs;
-impl ContainsSpec<String> for UuidSpecs
+impl SpecProvider<String> for UuidSpecs
 {
     fn spec() -> Spec<String> {
         Require::<String>::to()

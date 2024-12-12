@@ -1,4 +1,4 @@
-use crate::core::spec::contains_spec::ContainsSpec;
+use crate::core::spec::spec_provider::SpecProvider;
 use crate::core::spec_error::SpecError;
 use crate::core::validated::Validated;
 
@@ -6,7 +6,7 @@ use crate::core::validated::Validated;
 ///
 /// A trait to create a new instance of a value object where a spec
 /// is first validated to provide an `Ok(T1)` or an `Err(SpecError)`.
-pub trait ValueObjectFactory<T1: Clone,T2,S: ContainsSpec<T1>>
+pub trait ValueObjectFactory<T1: Clone,T2,S: SpecProvider<T1>>
 where
     T1: Into<Validated<T1,S>>
 {

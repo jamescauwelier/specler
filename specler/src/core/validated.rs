@@ -1,5 +1,5 @@
 use std::marker::PhantomData;
-use crate::core::spec::contains_spec::ContainsSpec;
+use crate::core::spec::spec_provider::SpecProvider;
 use crate::core::spec_error::SpecError;
 
 /// # Validated
@@ -9,7 +9,7 @@ use crate::core::spec_error::SpecError;
 pub enum Validated<T,S>
 where
     T: Clone,
-    S: ContainsSpec<T>
+    S: SpecProvider<T>
 {
     /// Marks a validation output as valid based on the spec
     Valid {
@@ -30,7 +30,7 @@ where
 impl <T, U> From<T> for Validated<T, U>
 where
     T: Clone,
-    U: ContainsSpec<T>
+    U: SpecProvider<T>
 {
     fn from(value: T) -> Validated<T, U> {
         let spec = U::spec();

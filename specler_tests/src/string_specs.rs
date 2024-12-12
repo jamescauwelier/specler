@@ -9,7 +9,7 @@ use specler_macros::value_object;
 struct SomeStringType(String);
 
 struct SomeStringTypeSpecs;
-impl<'a> ContainsSpec<String> for SomeStringTypeSpecs {
+impl<'a> SpecProvider<String> for SomeStringTypeSpecs {
     fn spec() -> Spec<String> {
         Require::<String>::to()
             .be(not_empty())

@@ -2,7 +2,7 @@
 pub mod spec_validation_result;
 
 /// Module: defines the trait to provide specs in structs
-pub mod contains_spec;
+pub mod spec_provider;
 
 use spec_validation_result::SpecValidationResult;
 use crate::core::spec_error::SpecError;
