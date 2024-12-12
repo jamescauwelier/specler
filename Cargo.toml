@@ -1,6 +1,9 @@
 [workspace]
 resolver = "2"
-members = ["specler", "specler_macros", "specler_tests"]
+members = ["specler", "specler_arbitrary", "specler_macros", "specler_tests"]
 
 [patch.crates-io]
 specler = { path = "./specler" }
+
+[workspace.dependencies]
+proptest = "1.5.0"

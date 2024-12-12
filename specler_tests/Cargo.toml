@@ -6,3 +6,7 @@ edition = "2021"
 [dependencies]
 specler = { path = "../specler", features = ["uuid_strings"] }
 specler_macros = { path = "../specler_macros" }
+
+[dev-dependencies]
+proptest.workspace = true
+specler_arbitrary = { path = "../specler_arbitrary" }

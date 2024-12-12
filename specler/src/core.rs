@@ -19,4 +19,4 @@ pub mod spec_error;
 pub mod validated;
 
 /// Module to provide traits to define spec dependent factories
-pub mod create_with_specification;
+pub mod value_object;

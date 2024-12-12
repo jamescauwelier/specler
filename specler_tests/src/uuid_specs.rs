@@ -1,11 +1,9 @@
-pub(crate) mod common;
-
 use specler::prelude::*;
 use specler::specs::uuid::a_uuid_v7;
-use specler_macros::create_with_spec;
+use specler_macros::value_object;
 
 #[derive(Debug)]
-#[create_with_spec(UuidSpecs)]
+#[value_object(UuidSpecs)]
 struct Id (String);
 
 struct UuidSpecs;
@@ -19,6 +17,7 @@ impl ContainsSpec<String> for UuidSpecs
 
 #[cfg(test)]
 mod tests {
+    use crate::{verify_invalid_input, verify_valid_input};
     use super::*;
 
     verify_valid_input!(valid_uuid_v7, "0193b205-ab8e-7b34-a13e-e18b9941dc05", Id::create);

@@ -14,6 +14,12 @@ impl Integer for i32 {}
 impl Integer for i64 {}
 impl Integer for i128 {}
 impl Integer for isize {}
+impl Integer for u8 {}
+impl Integer for u16 {}
+impl Integer for u32 {}
+impl Integer for u64 {}
+impl Integer for u128 {}
+impl Integer for usize {}
 
 /// Validator to check whether an input is larger or equal than a given x
 pub fn larger_or_equal_than<T: Integer + 'static>(x: T) -> Box<dyn Fn(T) -> ValidatorResult> {
