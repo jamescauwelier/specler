@@ -23,17 +23,17 @@ macro_rules! impl_arbitrary {
             /// to provide to the factory method of the target type
             $spec:ident
         ) => {
-            impl Arbitrary for $target {
+            impl proptest::prelude::Arbitrary for $target {
                 type Parameters = ();
 
                 fn arbitrary_with(args: Self::Parameters) -> Self::Strategy {
                     $spec::any_valid_value()
                         .prop_map(|s| $target::create(s))
-                        .prop_map(Result::unwrap)
+                        .prop_map(core::result::Result::unwrap)
                         .boxed()
                 }
 
-                type Strategy = BoxedStrategy<$target>;
+                type Strategy = proptest::prelude::BoxedStrategy<$target>;
             }
         };
     }
