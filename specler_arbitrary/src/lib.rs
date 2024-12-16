@@ -23,6 +23,10 @@ macro_rules! impl_arbitrary {
                 type Parameters = ();
 
                 fn arbitrary_with(args: Self::Parameters) -> Self::Strategy {
+                    use proptest::prelude::*;
+                    use specler::prelude::*;
+                    use specler_arbitrary::prelude::*;
+
                     $spec::valid_strategy()
                         .prop_map(|s| $target::create(s))
                         .prop_map(core::result::Result::unwrap)
