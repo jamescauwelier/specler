@@ -22,15 +22,11 @@ impl SpecProvider<usize> for FirstNumberSpec {
 use proptest::prelude::*;
 
 #[cfg(test)]
-impl ArbitraryValidSpecValue<usize> for FirstNumberSpec {
-    fn any_valid_value() -> BoxedStrategy<usize> {
+impl SpecStrategies<usize> for FirstNumberSpec {
+    fn valid_strategy() -> impl Strategy<Value = usize> {
         (1_usize..100_usize).boxed()
     }
-}
-
-#[cfg(test)]
-impl ArbitraryInvalidSpecValue<usize> for FirstNumberSpec {
-    fn any_invalid_value() -> BoxedStrategy<usize> {
+    fn invalid_strategy() -> impl Strategy<Value = usize> {
         (100_usize..=usize::MAX).boxed()
     }
 }
@@ -52,15 +48,12 @@ impl SpecProvider<u64> for SecondNumberSpec {
 }
 
 #[cfg(test)]
-impl ArbitraryValidSpecValue<u64> for SecondNumberSpec {
-    fn any_valid_value() -> BoxedStrategy<u64> {
+impl SpecStrategies<u64> for SecondNumberSpec {
+    fn valid_strategy() -> impl Strategy<Value=u64> {
         (0_u64..=100_u64).boxed()
     }
-}
 
-#[cfg(test)]
-impl ArbitraryInvalidSpecValue<u64> for SecondNumberSpec {
-    fn any_invalid_value() -> BoxedStrategy<u64> {
+    fn invalid_strategy() -> impl Strategy<Value=u64> {
         (100_u64..=u64::MAX).boxed()
     }
 }
@@ -82,13 +75,13 @@ mod tests {
 
         proptest! {
             #[test]
-            fn can_be_created_using_valid_input(input in FirstNumberSpec::any_valid_value()) {
+            fn can_be_created_using_valid_input(input in FirstNumberSpec::valid_strategy()) {
                 let first_number = FirstNumber::create(input);
                 assert!(first_number.is_ok());
             }
 
             #[test]
-            fn cannot_be_created_using_invalid_input(input in FirstNumberSpec::any_invalid_value()) {
+            fn cannot_be_created_using_invalid_input(input in FirstNumberSpec::invalid_strategy()) {
                 let first_number = FirstNumber::create(input);
                 assert!(!first_number.is_ok());
             }
@@ -103,18 +96,18 @@ mod tests {
     mod second_number {
         use crate::integer_specs::{SecondNumber, SecondNumberSpec};
         use proptest::proptest;
-        use specler::prelude::ValueObjectFactory;
-        use specler_arbitrary::{ArbitraryInvalidSpecValue, ArbitraryValidSpecValue};
+        use specler::prelude::*;
+        use specler_arbitrary::prelude::*;
 
         proptest! {
             #[test]
-            fn can_be_created_using_valid_input(input in SecondNumberSpec::any_valid_value()) {
+            fn can_be_created_using_valid_input(input in SecondNumberSpec::valid_strategy()) {
                 let second_number = SecondNumber::create(input);
                 assert!(second_number.is_ok());
             }
 
             #[test]
-            fn cannot_be_created_using_invalid_input(input in SecondNumberSpec::any_invalid_value()) {
+            fn cannot_be_created_using_invalid_input(input in SecondNumberSpec::invalid_strategy()) {
                 let second_number = SecondNumber::create(input);
                 assert!(!second_number.is_ok());
             }

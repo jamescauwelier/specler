@@ -24,8 +24,8 @@ impl<'a> SpecProvider<String> for SomeStringTypeSpecs {
 }
 
 #[cfg(test)]
-impl ArbitraryValidSpecValue<String> for SomeStringTypeSpecs {
-    fn any_valid_value() -> BoxedStrategy<String> {
+impl SpecStrategies<String> for SomeStringTypeSpecs {
+    fn valid_strategy() -> BoxedStrategy<String> {
         ".{2, 3}"
             .prop_filter(
                 "A regex generates strings with character length, while our code constrains on byte length, so an additional filter is needed",
@@ -33,11 +33,8 @@ impl ArbitraryValidSpecValue<String> for SomeStringTypeSpecs {
             )
             .boxed()
     }
-}
 
-#[cfg(test)]
-impl ArbitraryInvalidSpecValue<String> for SomeStringTypeSpecs {
-    fn any_invalid_value() -> BoxedStrategy<String> {
+    fn invalid_strategy() -> BoxedStrategy<String> {
         ".|.{4,}"
             .prop_filter(
                 "A regex generates strings with character length, while our code constrains on byte length, so an additional filter is needed",
@@ -55,17 +52,17 @@ mod tests {
     use crate::string_specs::{SomeStringType, SomeStringTypeSpecs};
     use proptest::prelude::*;
     use specler::prelude::*;
-    use specler_arbitrary::{ArbitraryInvalidSpecValue, ArbitraryValidSpecValue};
+    use specler_arbitrary::SpecStrategies;
 
     proptest! {
         #[test]
-        fn can_be_created_using_valid_input(s in SomeStringTypeSpecs::any_valid_value()) {
+        fn can_be_created_using_valid_input(s in SomeStringTypeSpecs::valid_strategy()) {
             let result = SomeStringType::create(s);
             assert!(result.is_ok());
         }
 
         #[test]
-        fn cannot_be_created_using_invalid_input(s in SomeStringTypeSpecs::any_invalid_value()) {
+        fn cannot_be_created_using_invalid_input(s in SomeStringTypeSpecs::invalid_strategy()) {
             let result = SomeStringType::create(s);
             assert!(!result.is_ok());
         }

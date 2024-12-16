@@ -23,27 +23,24 @@ impl SpecProvider<String> for UuidSpecs
 }
 
 #[cfg(test)]
-impl ArbitraryValidSpecValue<String> for UuidSpecs {
-    fn any_valid_value() -> BoxedStrategy<String> {
+impl SpecStrategies<String> for UuidSpecs {
+    fn valid_strategy() -> impl Strategy<Value=String> {
         // note that we could generate a more distributed set of
         // valid UUIDs by using randome timestamps for the
         // context seed
         Just(Uuid::now_v7().to_string()).boxed()
     }
-}
 
-#[cfg(test)]
-impl ArbitraryInvalidSpecValue<String> for UuidSpecs {
-    fn any_invalid_value() -> BoxedStrategy<String> {
+    fn invalid_strategy() -> impl Strategy<Value=String> {
         ".*"
             .prop_filter("String should not be a valid UUIDv7",
                          move |s| {
-                                match Uuid::parse_str(s) {
-                                    // we filter out uuids that are of version 7
-                                    Ok(uuid) => uuid.get_version_num() != 7,
-                                    // non-uuids are always invalid input
-                                    Err(_) => true
-                                }
+                             match Uuid::parse_str(s) {
+                                 // we filter out uuids that are of version 7
+                                 Ok(uuid) => uuid.get_version_num() != 7,
+                                 // non-uuids are always invalid input
+                                 Err(_) => true
+                             }
                          }
             )
             .boxed()
@@ -59,13 +56,13 @@ mod tests {
 
     proptest!{
         #[test]
-        fn can_be_created_using_valid_input(s in UuidSpecs::any_valid_value()) {
+        fn can_be_created_using_valid_input(s in UuidSpecs::valid_strategy()) {
             let id = Id::create(s);
             assert!(id.is_ok());
         }
 
         #[test]
-        fn cannot_be_created_using_invalid_input(s in UuidSpecs::any_invalid_value()) {
+        fn cannot_be_created_using_invalid_input(s in UuidSpecs::invalid_strategy()) {
             let id = Id::create(s);
             assert!(!id.is_ok());
         }
