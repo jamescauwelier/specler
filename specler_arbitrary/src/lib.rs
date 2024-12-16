@@ -1,19 +1,9 @@
 use proptest::prelude::*;
 
 pub mod prelude {
-    // pub use crate::ArbitraryValidSpecValue;
-    // pub use crate::ArbitraryInvalidSpecValue;
     pub use crate::SpecStrategies;
     pub use crate::impl_arbitrary;
 }
-
-// pub trait ArbitraryValidSpecValue<T> {
-//     fn any_valid_value() -> BoxedStrategy<T>;
-// }
-//
-// pub trait ArbitraryInvalidSpecValue<T> {
-//     fn any_invalid_value() -> BoxedStrategy<T>;
-// }
 
 pub trait SpecStrategies<T> {
     fn valid_strategy() -> impl Strategy<Value = T>;

@@ -1,6 +1,6 @@
 [package]
 name = "specler_arbitrary"
-version = "0.16.0"
+version = "0.17.0"
 edition = "2021"
 description = "For generating arbitrary values for specler specifications"
 license = "CC0-1.0"
