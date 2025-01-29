@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["specler", "specler_arbitrary", "specler_macros", "specler_tests"]
+members = ["specler", "specler_arbitrary", "specler_common", "specler_macros", "specler_tests"]
 
 [patch.crates-io]
 specler = { path = "./specler" }

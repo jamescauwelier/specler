@@ -1,0 +1,22 @@
+[package]
+name = "specler_common"
+version = "0.18.0"
+edition = "2021"
+description = "Commonly used specler sped definitions"
+license = "CC0-1.0"
+repository = "https://github.com/jamescauwelier/specler"
+documentation = "https://docs.rs/specler"
+homepage = "https://github.com/jamescauwelier/specler"
+readme = "README.md"
+keywords = ["validation", "specification", "rust"]
+authors = ["James Cauwelier <james.cauwelier@gmail.com>"]
+
+[features]
+default = ["uuid"]
+uuid = []
+
+[dependencies]
+proptest.workspace = true
+uuid = { version = "1.11.0", features = ["v4", "v7"] }
+specler = { path = "../specler", features = ["uuid_strings"] }
+specler_macros = { path = "../specler_macros" }

@@ -13,7 +13,7 @@ fn a_uuid(version: usize) -> ValidatorFn<String> {
                         ValidatorResult::invalid(format!("valid UUID string, but not a UUID v{}", version).as_str())
                     }
                 },
-                Err(_) => ValidatorResult::invalid("invalid UUID v4 string")
+                Err(_) => ValidatorResult::invalid(format!("invalid UUID v{} string", version).as_str())
             }
         }
     )
