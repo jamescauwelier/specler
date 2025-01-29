@@ -17,6 +17,6 @@ uuid = []
 
 [dependencies]
 proptest.workspace = true
+specler.workspace = true
+specler_macros.workspace = true
 uuid = { version = "1.11.0", features = ["v4", "v7"] }
-specler = { path = "../specler", features = ["uuid_strings"] }
-specler_macros = { path = "../specler_macros" }

@@ -4,6 +4,11 @@ members = ["specler", "specler_arbitrary", "specler_common", "specler_macros", "
 
 [patch.crates-io]
 specler = { path = "./specler" }
+specler_macros = { path = "./specler_macros" }
+specler_arbitrary = { path = "./specler_arbitrary" }
 
 [workspace.dependencies]
 proptest = "1.5.0"
+specler = { version = "0.19.0", path = "./specler", features = ["uuid_strings"] }
+specler_macros = { version = "0.19.0", path = "./specler_macros" }
+specler_arbitrary = { version = "0.19.0", path = "./specler_arbitrary" }
