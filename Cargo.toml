@@ -9,6 +9,6 @@ specler_arbitrary = { path = "./specler_arbitrary" }
 
 [workspace.dependencies]
 proptest = "1.5.0"
-specler = { version = "0.20.0", path = "./specler", features = ["uuid_strings"] }
-specler_macros = { version = "0.20.0", path = "./specler_macros" }
-specler_arbitrary = { version = "0.20.0", path = "./specler_arbitrary" }
+specler = { version = "0.21.0", path = "./specler", features = ["uuid_strings"] }
+specler_macros = { version = "0.21.0", path = "./specler_macros" }
+specler_arbitrary = { version = "0.21.0", path = "./specler_arbitrary" }

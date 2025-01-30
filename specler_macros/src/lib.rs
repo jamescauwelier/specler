@@ -28,7 +28,7 @@ pub fn specled(attr: TokenStream, input: TokenStream) -> proc_macro::TokenStream
         impl specler::prelude::ValueObjectFactory<#field_type, #struct_identifier, #specs> for #struct_identifier {
             fn create(pre_validated_input: impl Into<#field_type>) -> Result<#struct_identifier, SpecError> {
                 let input: #field_type = pre_validated_input.into();
-                let validated_input: Validated<#field_type, #specs> = input.into();
+                let validated_input: specler::prelude::Validated<#field_type, #specs> = input.into();
                 match validated_input{
                     specler::prelude::Validated::Valid { value, _spec } => Ok(#struct_identifier(value)),
                     specler::prelude::Validated::Invalid { error, _spec } => Err(error.named(stringify!(#struct_identifier))),
