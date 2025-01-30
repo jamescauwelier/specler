@@ -24,7 +24,7 @@ mod tests {
         use super::super::*;
         
         #[derive(Debug)]
-        #[value_object(UuidV4Spec)]
+        #[specled(UuidV4Spec)]
         struct Id(String);
 
 
@@ -53,7 +53,7 @@ mod tests {
         use super::super::*;
 
         #[derive(Debug)]
-        #[value_object(UuidV7Spec)]
+        #[specled(UuidV7Spec)]
         struct Id(String);
 
         #[test]

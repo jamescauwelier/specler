@@ -4,7 +4,7 @@ use specler::prelude::*;
 use specler::specs::integer::{
     larger_or_equal_than, larger_than, smaller_or_equal_than, smaller_than,
 };
-use specler_macros::value_object;
+use specler_macros::specled;
 
 #[cfg(test)]
 use specler_arbitrary::prelude::*;
@@ -32,7 +32,7 @@ impl SpecStrategies<usize> for FirstNumberSpec {
 }
 
 #[derive(Debug)]
-#[value_object(FirstNumberSpec)]
+#[specled(FirstNumberSpec)]
 struct FirstNumber(usize);
 
 #[cfg(test)]
@@ -59,7 +59,7 @@ impl SpecStrategies<u64> for SecondNumberSpec {
 }
 
 #[derive(Debug)]
-#[value_object(SecondNumberSpec)]
+#[specled(SecondNumberSpec)]
 struct SecondNumber(u64);
 
 #[cfg(test)]

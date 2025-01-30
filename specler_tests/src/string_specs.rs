@@ -2,7 +2,7 @@
 
 use specler::prelude::*;
 use specler::specs::string::{no_longer_than, no_shorter_than, not_empty};
-use specler_macros::value_object;
+use specler_macros::specled;
 
 #[cfg(test)]
 use proptest::prelude::*;
@@ -10,7 +10,7 @@ use proptest::prelude::*;
 use specler_arbitrary::prelude::*;
 
 #[derive(Debug)]
-#[value_object(SomeStringTypeSpecs)]
+#[specled(SomeStringTypeSpecs)]
 struct SomeStringType(String);
 
 struct SomeStringTypeSpecs;

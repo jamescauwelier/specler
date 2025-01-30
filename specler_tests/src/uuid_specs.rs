@@ -1,6 +1,6 @@
 use specler::prelude::*;
 use specler::specs::uuid::a_uuid_v7;
-use specler_macros::value_object;
+use specler_macros::specled;
 
 #[cfg(test)]
 use proptest::prelude::*;
@@ -10,7 +10,7 @@ use specler_arbitrary::prelude::*;
 use uuid::Uuid;
 
 #[derive(Debug)]
-#[value_object(UuidSpecs)]
+#[specled(UuidSpecs)]
 struct Id (String);
 
 struct UuidSpecs;
