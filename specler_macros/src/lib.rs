@@ -6,7 +6,7 @@ use quote::{quote, ToTokens};
 use syn::{parse_macro_input, ItemStruct};
 
 #[proc_macro_attribute]
-pub fn value_object(attr: TokenStream, input: TokenStream) -> proc_macro::TokenStream {
+pub fn specled(attr: TokenStream, input: TokenStream) -> proc_macro::TokenStream {
 
     let specs = parse_macro_input!(attr as Ident);
     let item = parse_macro_input!(input as ItemStruct);
